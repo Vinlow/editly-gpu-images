@@ -189,12 +189,7 @@ async function Editly(config = {}) {
       '-loop', 0,
     ] : [
       '-vf', 'format=yuv420p',
-      '-vcodec', 'libx264',
-      '-profile:v', 'high',
-      ...(fast ? ['-preset:v', 'ultrafast'] : ['-preset:v', 'medium']),
-      '-crf', '18',
-
-      '-movflags', 'faststart',
+      ...(fast ? [] : [])
     ];
 
     const audioOutputArgs = audioFilePath ? ['-acodec', 'aac', '-b:a', '128k'] : [];
@@ -205,7 +200,8 @@ async function Editly(config = {}) {
   function startFfmpegWriterProcess() {
     const args = [
       ...(enableFfmpegLog ? [] : ['-hide_banner', '-loglevel', 'error']),
-
+      '-hwaccel', 'cuda',
+      '-hwaccel_output_format', 'cuda',
       '-f', 'rawvideo',
       '-vcodec', 'rawvideo',
       '-pix_fmt', 'rgba',

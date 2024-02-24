@@ -188,7 +188,7 @@ async function Editly(config = {}) {
       '-vf', `format=rgb24,fps=${fps},scale=${width}:${height}:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse`,
       '-loop', 0,
     ] : [
-      '-vf', 'format=yuv420p',
+      '-vf', 'format=yuv420p', // -c:a copy -c:v h264_nvenc // -b:v 5M -pix_fmt yuv420p
       ...(fast ? [] : [])
     ];
 
